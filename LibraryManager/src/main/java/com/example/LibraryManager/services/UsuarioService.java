@@ -14,8 +14,9 @@ public class UsuarioService {
         this.UsuarioRepository = usuarioRepository;
     }
 
-    public Optional<Usuario> buscarPorId(Long id){
-        return UsuarioRepository.findById(id);
+    public Usuario buscarPorId(Long id){
+        return UsuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
     public List<Usuario> buscarTodos(){

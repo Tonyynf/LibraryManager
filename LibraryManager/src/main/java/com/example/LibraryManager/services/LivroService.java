@@ -10,20 +10,18 @@ import java.util.List;
 @Service
 public class LivroService {
     @Autowired
-    private LivroRepository LivroRepository;
+    private LivroRepository livroRepository;
 
     public List<Livro> listarTodos(){
-        return LivroRepository.findAll();
+        return livroRepository.findAll();
     }
 
     public Livro buscarPorId(Long id){
-        return LivroRepository.findById(id).get();
+        return livroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
     }
 
-    public Livro buscarPorTitulo(String titulo){
-        return LivroRepository.findByTitulo(titulo).get();
+    public List<Livro> buscarPorTitulo(String titulo){
+        return livroRepository.findByTitulo(titulo);
     }
-
-
-
 }
