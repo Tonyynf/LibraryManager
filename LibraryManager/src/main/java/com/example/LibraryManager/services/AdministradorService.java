@@ -14,11 +14,28 @@ public class AdministradorService {
         this.administradorRepository = administradorRepository;
     }
 
-    public Optional<Administrador> buscarAdministradorPorId(Long id){
-        return administradorRepository.findById(id);
+    public Administrador buscarAdministradorPorId(Long id){
+        return administradorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Administrador não encontrado com o ID: " + id));
     }
     public List<Administrador> buscarTodos(){
         return administradorRepository.findAll();
+    }
+
+    public Administrador criarAdministrador(Administrador administrador){
+        return administradorRepository.save(administrador);
+    }
+
+    public Administrador atualizarAdministrador(Long id, Administrador administradorAtualizado){
+        return administradorRepository.findById(id).map(administradorExistente -> {
+            administradorExistente.setNome(administradorAtualizado.getNome());
+            administradorExistente.setEmail(administradorAtualizado.getEmail());
+            //Talvez essaa alteração de senha precise passar pelo HashCode
+            administradorExistente.setSenha(administradorAtualizado.getSenha());
+
+            return administradorRepository.save(administradorExistente);
+            //↓ ↓ ↓ Depois criar um package ou arquivo de exceptions ↓ ↓ ↓
+        }).orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
     }
 
     public void deleteAdministradorPorId(Long id){
