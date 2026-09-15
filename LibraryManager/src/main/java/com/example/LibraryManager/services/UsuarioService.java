@@ -43,7 +43,7 @@ public class UsuarioService {
 
                     return UsuarioRepository.save(usuarioExistente);
             //↓ ↓ ↓ Depois criar um package ou arquivo de exceptions ↓ ↓ ↓
-                }).orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
+        }).orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
     }
 
     public void deletarUsuario(Long id){
