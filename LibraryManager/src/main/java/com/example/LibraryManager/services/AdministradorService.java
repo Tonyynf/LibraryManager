@@ -4,7 +4,6 @@ import com.example.LibraryManager.models.Administrador;
 import com.example.LibraryManager.repositories.AdministradorRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdministradorService {
