@@ -1,6 +1,6 @@
-package com.example.LibraryManager.repositories;
+package com.project.LibraryManager.repositories;
 
-import com.example.LibraryManager.models.Administrador;
+import com.project.LibraryManager.models.Administrador;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
