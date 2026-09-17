@@ -26,9 +26,8 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscarPorId(id));
     }
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@RequestBody UsuarioRequestDTO usuario){
-        Usuario response = usuarioService.criarUsuario(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<UsuarioResponseDTO> createUsuario(@RequestBody UsuarioRequestDTO usuario){
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuario));
     }
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> updateUsuario(@PathVariable Long id, @RequestBody UsuarioRequestDTO usuario){
