@@ -1,4 +1,4 @@
-package com.example.LibraryManager.models;
+package com.project.LibraryManager.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +11,7 @@ import lombok.*;
 public class Administrador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String nome;
@@ -19,9 +19,9 @@ public class Administrador {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String senha;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String keyPass;
 }
