@@ -1,8 +1,11 @@
-package com.example.LibraryManager.controllers;
+package com.project.LibraryManager.controllers;
 
-import com.example.LibraryManager.models.Usuario;
-import com.example.LibraryManager.services.UsuarioService;
+import com.project.LibraryManager.dto.UsuarioRequestDTO;
+import com.project.LibraryManager.dto.UsuarioResponseDTO;
+import com.project.LibraryManager.models.Usuario;
+import com.project.LibraryManager.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +26,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscarPorId(id));
     }
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok(usuarioService.criarUsuario(usuario));
+    public ResponseEntity<Usuario> createUsuario(@RequestBody UsuarioRequestDTO usuario){
+        Usuario response = usuarioService.criarUsuario(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
+    public ResponseEntity<UsuarioResponseDTO> updateUsuario(@PathVariable Long id, @RequestBody UsuarioRequestDTO usuario){
         return ResponseEntity.ok(usuarioService.atualizarUsuario(id, usuario));
     }
     @DeleteMapping("/{id}")

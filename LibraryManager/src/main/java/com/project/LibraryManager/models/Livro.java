@@ -1,4 +1,4 @@
-package com.example.LibraryManager.models;
+package com.project.LibraryManager.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,10 +19,10 @@ public class Livro {
     @Column(nullable = false)
     private String autor;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String editora;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int paginas;
 
     @Column(nullable = false)

@@ -1,10 +1,11 @@
-package com.example.LibraryManager.services;
+package com.project.LibraryManager.services;
 
-import com.example.LibraryManager.models.Usuario;
-import com.example.LibraryManager.repositories.UsuarioRepository;
+import com.project.LibraryManager.dto.UsuarioRequestDTO;
+import com.project.LibraryManager.dto.UsuarioResponseDTO;
+import com.project.LibraryManager.models.Usuario;
+import com.project.LibraryManager.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -23,25 +24,32 @@ public class UsuarioService {
         return UsuarioRepository.findAll();
     }
 
-    public Usuario criarUsuario(Usuario usuario){
+    public UsuarioResponseDTO criarUsuario(UsuarioRequestDTO usuario){
         //↓ ↓ ↓ Depois criar um package ou arquivo de exceptions ↓ ↓ ↓
-        boolean emailExistente = UsuarioRepository.existsByEmail(usuario.getEmail());
+        boolean emailExistente = UsuarioRepository.existsByEmail(usuario.email());
 
         if(emailExistente){
             throw new RuntimeException("Este email já está cadastrado!");
         }
 
-        return UsuarioRepository.save(usuario);
+        Usuario usuarioNovo = new Usuario(
+                null,
+                usuario.nome(),
+                usuario.email(),
+                usuario.senha()
+        );
+
+        return converterParaResponseDto(UsuarioRepository.save(usuarioNovo));
     }
 
-    public Usuario atualizarUsuario(Long id, Usuario usuarioAtualizado){
+    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO usuarioAtualizado){
         return UsuarioRepository.findById(id).map(usuarioExistente -> {
-                    usuarioExistente.setNome(usuarioAtualizado.getNome());
-                    usuarioExistente.setEmail(usuarioAtualizado.getEmail());
+                    usuarioExistente.setNome(usuarioAtualizado.nome());
+                    usuarioExistente.setEmail(usuarioAtualizado.email());
                     //Talvez essaa alteração de senha precise passar pelo HashCode
-                    usuarioExistente.setSenha(usuarioAtualizado.getSenha());
+                    usuarioExistente.setSenha(usuarioAtualizado.senha());
 
-                    return UsuarioRepository.save(usuarioExistente);
+                    return converterParaResponseDto(UsuarioRepository.save(usuarioExistente));
             //↓ ↓ ↓ Depois criar um package ou arquivo de exceptions ↓ ↓ ↓
         }).orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
     }
@@ -53,4 +61,13 @@ public class UsuarioService {
         }
         UsuarioRepository.deleteById(id);
     }
+
+    private UsuarioResponseDTO converterParaResponseDto(Usuario user) {
+        return new UsuarioResponseDTO(
+                user.getId(),
+                user.getNome(),
+                user.getEmail()
+        );
+    }
+
 }

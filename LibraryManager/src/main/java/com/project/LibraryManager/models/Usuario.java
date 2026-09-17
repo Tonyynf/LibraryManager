@@ -1,4 +1,4 @@
-package com.example.LibraryManager.models;
+package com.project.LibraryManager.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,6 +19,6 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String senha;
 }

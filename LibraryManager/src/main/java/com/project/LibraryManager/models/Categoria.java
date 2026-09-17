@@ -1,4 +1,4 @@
-package com.example.LibraryManager.models;
+package com.project.LibraryManager.models;
 
 public enum Categoria {
         FICCAO,
