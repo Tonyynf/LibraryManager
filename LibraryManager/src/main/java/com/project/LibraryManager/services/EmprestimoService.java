@@ -1,6 +1,5 @@
 package com.project.LibraryManager.services;
 
-
 import com.project.LibraryManager.exceptions.BusinessRuleException;
 import com.project.LibraryManager.exceptions.ResourceNotFoundException;
 import com.project.LibraryManager.models.Emprestimo;
@@ -12,7 +11,6 @@ import com.project.LibraryManager.repositories.ExemplarRepository;
 import com.project.LibraryManager.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -54,6 +52,22 @@ public class EmprestimoService {
         emprestimo.setDataEmprestimo(LocalDate.now());
         emprestimo.setDataPrevistaDevolucao(LocalDate.now().plusDays(DIAS_EMPRESTIMO));
         emprestimo.setStatus(StatusEmprestimo.ATIVO);
+
+        return emprestimoRepository.save(emprestimo);
+    }
+
+    @Transactional
+    public Emprestimo devolver(Long emprestimoId) {
+        Emprestimo emprestimo = emprestimoRepository.findById(emprestimoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Empréstimo não encontrado"));
+
+        if (emprestimo.getStatus() == StatusEmprestimo.DEVOLVIDO) {
+            throw new BusinessRuleException("Empréstimo já foi devolvido");
+        }
+
+        emprestimo.setDataDevolucaoEfetiva(LocalDate.now());
+        emprestimo.setStatus(StatusEmprestimo.DEVOLVIDO);
+        emprestimo.getExemplar().setStatus(StatusExemplar.DISPONIVEL);
 
         return emprestimoRepository.save(emprestimo);
     }
