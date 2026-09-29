@@ -2,9 +2,9 @@ package com.project.LibraryManager.controllers;
 
 import com.project.LibraryManager.dto.EmprestimoRequestDTO;
 import com.project.LibraryManager.dto.EmprestimoResponseDTO;
+import com.project.LibraryManager.mappers.EmprestimoMapper;
 import com.project.LibraryManager.models.Emprestimo;
 import com.project.LibraryManager.services.EmprestimoService;
-import com.project.LibraryManager.services.LivroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class EmprestimoController {
     private final EmprestimoService emprestimoService;
+    private final EmprestimoMapper mapper;
 
     @PostMapping
     public ResponseEntity<EmprestimoResponseDTO> emprestar(@RequestBody EmprestimoRequestDTO dto) {
